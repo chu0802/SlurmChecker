@@ -1,0 +1,19 @@
+services:
+  slack-bot:
+    build: .
+    container_name: slurm_bot_container
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - /tmp/ssh_mux:/tmp/ssh_mux 
+    env_file:
+      - .env
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare_tunnel
+    restart: always
+    command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
+    depends_on:
+      - slack-bot
