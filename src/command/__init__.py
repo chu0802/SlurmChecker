@@ -3,6 +3,7 @@ from ..config import get_settings
 from .base import BaseCommand
 from .simple import SimpleCommand
 from .show import ShowCommand
+from .bind_unbind import BindCommand, UnbindCommand
 
 settings = get_settings()
 
@@ -10,6 +11,8 @@ _commands = [
     SimpleCommand("/sq", settings.SLURM_CMD_SQUEUE),
     SimpleCommand("/share", settings.SLURM_CMD_SSHARE),
     ShowCommand(),
+    BindCommand(),
+    UnbindCommand(),
 ]
 
 COMMAND_REGISTRY: Dict[str, BaseCommand] = {cmd.name: cmd for cmd in _commands}

@@ -1,10 +1,18 @@
 import httpx
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, BackgroundTasks, Request
 from src.security import verify_slack_signature
 from src.ssh_client import execute_remote_command
 from src.command import get_command_handler
+from src.monitor import monitor_service
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    monitor_service.start()
+    yield
+    monitor_service.stop()
+
+app = FastAPI(lifespan=lifespan)
 
 def background_job_runner(server: str, final_cmd: str, response_url: str):
     result_text = execute_remote_command(server, final_cmd)
@@ -38,6 +46,14 @@ async def dispatch_command(
     error = handler.validate(command_args)
     if error:
         return {"response_type": "ephemeral", "text": error}
+
+    if handler.is_local:
+        channel_id = form_data.get("channel_id")
+        result_text = handler.execute_local(server, command_args, {"channel_id": channel_id})
+        return {
+            "response_type": "in_channel",
+            "text": result_text
+        }
 
     final_cmd = handler.build_shell_command(command_args)
 

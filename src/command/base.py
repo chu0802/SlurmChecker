@@ -28,3 +28,15 @@ class BaseCommand(ABC):
         `user_input` contains arguments after the server name.
         """
         pass
+
+    @property
+    def is_local(self) -> bool:
+        """Whether the command should be executed locally on the bot server."""
+        return False
+
+    def execute_local(self, server: str, user_input: str, context: dict) -> str:
+        """
+        Execute the command locally.
+        `context` may contain extra info like channel_id.
+        """
+        raise NotImplementedError("This command does not support local execution.")
