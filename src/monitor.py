@@ -96,7 +96,7 @@ class JobMonitor:
         parsed_data = self._parse_accuracy(log_output)
 
         if parsed_data:
-            new_epoch, new_accuracy, experiment_name = parsed_data
+            new_epoch, experiment_name, new_accuracy = parsed_data
             
             with self._lock:
                 key = (server, job_id)
