@@ -17,7 +17,7 @@ class ShowCommand(BaseCommand):
         job_id = match.group(1)
         lines_n = match.group(2)
 
-        cmd = f"show {job_id} -e"
+        cmd = f"show {job_id}"
         if lines_n:
             cmd += f" | tail -n {lines_n}"
         
