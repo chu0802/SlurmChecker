@@ -10,7 +10,10 @@ class SimpleCommand(BaseCommand):
         return self._name
 
     def validate(self, user_input: str) -> str | None:
+        # Simple commands generally don't take extra complex arguments needed for validation,
+        # or they just ignore extra arguments.
         return None
 
     def build_shell_command(self, user_input: str) -> str:
+        # Ignores user_input (args) and returns the fixed command
         return self._cmd

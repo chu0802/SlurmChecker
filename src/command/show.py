@@ -9,7 +9,7 @@ class ShowCommand(BaseCommand):
     def validate(self, user_input: str) -> str | None:
         pattern = r"^(\d+)(?:\s+(\d+))?$"
         if not re.match(pattern, user_input.strip()):
-            return "❌ Invalid format. Usage: `/show [Job ID]` or `/show [Job ID] [N]`"
+            return "❌ Invalid format. Usage: `/show <server> [Job ID]` or `/show <server> [Job ID] [N]`"
         return None
 
     def build_shell_command(self, user_input: str) -> str:

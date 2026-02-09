@@ -6,8 +6,8 @@ from src.command import get_command_handler
 
 app = FastAPI()
 
-def background_job_runner(final_cmd: str, response_url: str):
-    result_text = execute_remote_command(final_cmd)
+def background_job_runner(server: str, final_cmd: str, response_url: str):
+    result_text = execute_remote_command(server, final_cmd)
     payload = {"text": f"💻 Output:\n```{result_text}```"}
     try:
         httpx.post(response_url, json=payload)
@@ -28,13 +28,20 @@ async def dispatch_command(
     if not handler:
         return {"response_type": "ephemeral", "text": f"❌ Unknown command: `{command_name}`"}
 
-    error = handler.validate(user_input)
+    if not user_input:
+        return {"response_type": "ephemeral", "text": "❌ Missing required argument: `<server>`. Usage: `/command <server> [args]`"}
+
+    parts = user_input.split(maxsplit=1)
+    server = parts[0]
+    command_args = parts[1] if len(parts) > 1 else ""
+
+    error = handler.validate(command_args)
     if error:
         return {"response_type": "ephemeral", "text": error}
 
-    final_cmd = handler.build_shell_command(user_input)
+    final_cmd = handler.build_shell_command(command_args)
 
-    background_tasks.add_task(background_job_runner, final_cmd, response_url)
+    background_tasks.add_task(background_job_runner, server, final_cmd, response_url)
     
     return {
         "response_type": "ephemeral",

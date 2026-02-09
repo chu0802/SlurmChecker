@@ -3,8 +3,8 @@ from .config import get_settings
 
 settings = get_settings()
 
-def execute_remote_command(cmd_string: str) -> str:
-    SOCKET_PATH = "/tmp/ssh_mux/slurm_socket"
+def execute_remote_command(server: str, cmd_string: str) -> str:
+    SOCKET_PATH = f"/tmp/ssh_mux/{server}"
     
     final_command = f"bash -l -c '{cmd_string}'"
 
@@ -13,7 +13,7 @@ def execute_remote_command(cmd_string: str) -> str:
         "-S", SOCKET_PATH,
         "-o", "BatchMode=yes",
         "-o", "StrictHostKeyChecking=no",
-        f"{settings.SSH_USER}@{settings.SSH_HOST}",
+        f"{settings.SSH_USER}@{server}.{settings.SSH_HOST}",
         final_command,
     ]
 
