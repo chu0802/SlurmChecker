@@ -4,6 +4,7 @@ from .base import BaseCommand
 from .simple import SimpleCommand
 from .show import ShowCommand
 from .bind_unbind import BindCommand, UnbindCommand
+from .list_bind import ListBindCommand
 
 settings = get_settings()
 
@@ -13,6 +14,7 @@ _commands = [
     ShowCommand(),
     BindCommand(),
     UnbindCommand(),
+    ListBindCommand(),
 ]
 
 COMMAND_REGISTRY: Dict[str, BaseCommand] = {cmd.name: cmd for cmd in _commands}

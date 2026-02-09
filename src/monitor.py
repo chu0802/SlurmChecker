@@ -48,6 +48,19 @@ class JobMonitor:
                 return True
         return False
 
+    def list_jobs(self) -> Dict[str, list]:
+        """List all currently monitored jobs grouped by server."""
+        with self._lock:
+            result = {}
+            for (server, job_id), data in self._jobs.items():
+                if server not in result:
+                    result[server] = []
+                result[server].append({
+                    "job_id": job_id,
+                    "last_epoch": data.get("last_epoch", -1)
+                })
+        return result
+
     def _loop(self):
         while self._running:
             try:
