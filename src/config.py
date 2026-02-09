@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     SSH_HOST: str
     SSH_USER: str
 
+    TUNNEL_TOKEN: str
+
     SLURM_CMD_SQUEUE: str
     SLURM_CMD_SSHARE: str
 
