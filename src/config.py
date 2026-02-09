@@ -4,6 +4,7 @@ from functools import lru_cache
 class Settings(BaseSettings):
     SLACK_SIGNING_SECRET: str
     SLACK_BOT_TOKEN: str
+    SLACK_LOG_CHANNEL_ID: str
     
     SSH_HOST: str
     SSH_USER: str

@@ -29,12 +29,11 @@ class JobMonitor:
         if self._thread:
             self._thread.join()
 
-    def bind_job(self, server: str, job_id: str, channel_id: str):
+    def bind_job(self, server: str, job_id: str):
         """Add a job to the monitoring list."""
         with self._lock:
             key = (server, job_id)
             self._jobs[key] = {
-                "channel_id": channel_id,
                 "last_epoch": -1
             }
         print(f"✅ Monitoring started for Job {job_id} on {server}")
@@ -128,13 +127,8 @@ class JobMonitor:
         return matches[-1]
 
     def _notify_slack(self, server: str, job_id: str, message: str):
-        with self._lock:
-            job_data = self._jobs.get((server, job_id))
-        
-        if not job_data:
-            return
-
-        channel_id = job_data["channel_id"]
+        # Always use the configured fixed channel
+        channel_id = self.settings.SLACK_LOG_CHANNEL_ID
         text = f"[{server}] Job {job_id}:\n{message}"
 
         url = "https://slack.com/api/chat.postMessage"

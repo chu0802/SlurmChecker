@@ -21,13 +21,10 @@ class BindCommand(BaseCommand):
 
     def execute_local(self, server: str, user_input: str, context: dict) -> str:
         job_id = user_input.strip()
-        channel_id = context.get("channel_id")
+        # channel_id is now ignored, using SLACK_LOG_CHANNEL_ID from env
         
-        if not channel_id:
-            return "❌ Error: Could not determine Slack Channel ID."
-
-        monitor_service.bind_job(server, job_id, channel_id)
-        return f"✅ Started monitoring Job *{job_id}* on `{server}`.\nI will notify you here when new results arrive."
+        monitor_service.bind_job(server, job_id)
+        return f"✅ Started monitoring Job *{job_id}* on `{server}`.\nI will notify you in the configured log channel when new results arrive."
 
 
 class UnbindCommand(BaseCommand):
