@@ -36,12 +36,20 @@ async def dispatch_command(
     if not handler:
         return {"response_type": "ephemeral", "text": f"❌ Unknown command: `{command_name}`"}
 
-    if not user_input:
-        return {"response_type": "ephemeral", "text": "❌ Missing required argument: `<server>`. Usage: `/command <server> [args]`"}
+    server = ""
+    command_args = ""
 
-    parts = user_input.split(maxsplit=1)
-    server = parts[0]
-    command_args = parts[1] if len(parts) > 1 else ""
+    if handler.requires_server:
+        if not user_input:
+            return {"response_type": "ephemeral", "text": "❌ Missing required argument: `<server>`. Usage: `/command <server> [args]`"}
+        
+        parts = user_input.split(maxsplit=1)
+        server = parts[0]
+        command_args = parts[1] if len(parts) > 1 else ""
+    else:
+        # Commands that don't need a server argument (e.g., /lsbind)
+        server = "local"
+        command_args = user_input
 
     error = handler.validate(command_args)
     if error:

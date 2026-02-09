@@ -6,6 +6,10 @@ class ListBindCommand(BaseCommand):
     def name(self) -> str:
         return "/lsbind"
 
+    @property
+    def requires_server(self) -> bool:
+        return False
+
     def validate(self, user_input: str) -> str | None:
         return None
 

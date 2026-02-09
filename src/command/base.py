@@ -13,6 +13,11 @@ class BaseCommand(ABC):
         """The Slack command name (e.g., '/show')."""
         pass
 
+    @property
+    def requires_server(self) -> bool:
+        """Whether the command requires a server argument as the first parameter. Defaults to True."""
+        return True
+
     @abstractmethod
     def validate(self, user_input: str) -> str | None:
         """
