@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - /tmp/ssh_mux:/tmp/ssh_mux 
+      - /home/ubuntu/.ssh/sockets:/tmp/ssh_mux 
     env_file:
       - .env
 
