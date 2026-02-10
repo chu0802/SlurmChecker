@@ -69,7 +69,7 @@ class JobMonitor:
             except Exception as e:
                 print(f"⚠️ Error in monitoring loop: {e}")
             
-            for _ in range(60):
+            for _ in range(30):
                 if not self._running:
                     break
                 time.sleep(1)
