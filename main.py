@@ -28,8 +28,8 @@ async def dispatch_command(
     background_tasks: BackgroundTasks
 ):
     form_data = await request.form()
-    command_name = form_data.get("command")
-    user_input = form_data.get("text", "").strip()
+    command_name = form_data.get("command", "").lower()
+    user_input = form_data.get("text", "").strip().lower()
     response_url = form_data.get("response_url")
 
     handler = get_command_handler(command_name)
