@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     TUNNEL_TOKEN: str
 
     SLURM_CMD_SQUEUE: str
+    SLURM_CMD_FULL_SQUEUE: str
     SLURM_CMD_SSHARE: str
 
     class Config:

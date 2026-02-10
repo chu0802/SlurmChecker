@@ -9,7 +9,7 @@ from .list_bind import ListBindCommand
 settings = get_settings()
 
 _commands = [
-    SimpleCommand("/sq", settings.SLURM_CMD_SQUEUE),
+    SimpleCommand("/sq", settings.SLURM_CMD_FULL_SQUEUE),
     SimpleCommand("/share", settings.SLURM_CMD_SSHARE),
     ShowCommand(),
     BindCommand(),
