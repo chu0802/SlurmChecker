@@ -96,6 +96,19 @@ class JobMonitor:
             self._notify_slack(server, job_id, "Job finished or disappeared. Unbinding.")
             return
 
+        # Track status changes (specifically PD -> R)
+        with self._lock:
+            if (server, job_id) in self._jobs:
+                job_data = self._jobs[(server, job_id)]
+                last_status = job_data.get("status")
+                
+                # Update status
+                job_data["status"] = status_output
+                
+                # Check for transition from PD to R
+                if last_status and "PD" in last_status and "R" in status_output:
+                    self._notify_slack(server, job_id, "🚀 Job transitioned from Pending (PD) to Running (R).")
+
         if "PD" in status_output:
             return 
         
