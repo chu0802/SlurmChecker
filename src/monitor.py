@@ -57,6 +57,7 @@ class JobMonitor:
                     result[server] = []
                 result[server].append({
                     "job_id": job_id,
+                    "status": data.get("status", "Unknown"),
                     "last_epoch": data.get("last_epoch", -1)
                 })
         return result

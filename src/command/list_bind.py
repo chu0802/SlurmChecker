@@ -30,8 +30,9 @@ class ListBindCommand(BaseCommand):
         for srv, jobs in jobs_map.items():
             msg += f"\n🖥️ `{srv}`:\n"
             for job in jobs:
+                status = job.get("status", "Unknown")
                 last_epoch = job["last_epoch"]
                 epoch_str = f"(Last Epoch: {last_epoch})" if last_epoch != -1 else "(Waiting for first result)"
-                msg += f"  • Job *{job['job_id']}* {epoch_str}\n"
+                msg += f"  • Job *{job['job_id']}* [`{status}`] {epoch_str}\n"
                 
         return msg
