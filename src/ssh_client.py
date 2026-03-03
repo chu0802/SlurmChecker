@@ -28,9 +28,13 @@ def execute_remote_command(server: str, cmd_string: str) -> str:
         if result.returncode != 0:
             if "No such file" in result.stderr or result.returncode == 255:
                 return "❌ Connection Dead. Please re-authenticate on the Oracle Server."
-            return f"⚠️ Error:\n{result.stderr}"
+            return f"⚠️ Error:\n{result.stdout}\n{result.stderr}"
 
-        return result.stdout if result.stdout else "No active jobs."
+        output = result.stdout
+        if result.stderr:
+            output += f"\n{result.stderr}"
+
+        return output if output.strip() else "No active jobs."
 
     except subprocess.TimeoutExpired:
         return "❌ Command Timed Out."
