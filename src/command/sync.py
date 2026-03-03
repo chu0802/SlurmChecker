@@ -46,7 +46,7 @@ class SyncCommand(BaseCommand):
 
         # Enqueue tasks for each server
         for srv in servers:
-            remote_cmd = f"ssh-agent bash -c \'ssh-add ~/.ssh/{srv}; cd ~/scratch/{project_name} && git pull\'"
+            remote_cmd = f"cd ~/scratch/{project_name} && git -c core.sshCommand=\"ssh -i ~/.ssh/{srv}\" pull"
             
             background_tasks.add_task(job_runner, srv, remote_cmd, response_url)
 
