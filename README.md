@@ -26,7 +26,8 @@ A powerful Slackbot for monitoring and managing Slurm jobs across multiple remot
 | `/unbind` | `/unbind <server> [job_id...]` | Stop monitoring specific jobs. If no ID provided, unbinds **all** monitored jobs for that server. |
 | `/lsbind` | `/lsbind` | Lists all jobs currently being monitored and their status. |
 | `/scancel` | `/scancel <server> <job_id>` | Cancels a running job. |
-| `/sync` | `/sync [project_name]` | Runs `git pull` in `~/scratch/<project_name>` on all configured `SSH_SERVERS`. |
+| `/sync` | `/sync [project_name]` | Runs `git pull` in `~/scratch/<project_name>` on all configured `SSH_SERVERS`. Defaults to `semantic_selector`. |
+| `/run` | `/run [servers] <args...>` | Runs `python -m script.script_builder <args> && sbatch inference.sh` on specified or all servers. |
 
 ## ⚙️ Configuration
 

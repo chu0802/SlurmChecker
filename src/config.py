@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     SSH_USER: str
     SSH_SERVERS: str = ""  # Comma-separated list of servers
 
+    DEFAULT_PROJECT_NAME: str = "semantic_selector"
+
     TUNNEL_TOKEN: str
 
     SLURM_CMD_SQUEUE: str
