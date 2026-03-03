@@ -18,8 +18,8 @@ class SyncCommand(BaseCommand):
         return True
 
     def validate(self, user_input: str) -> Optional[str]:
-        if not user_input.strip():
-            return "❌ Please specify a project name. Usage: `/sync <project_name>`"
+        # if not user_input.strip():
+        #     return "❌ Please specify a project name. Usage: `/sync <project_name>`"
         
         servers = [s.strip() for s in settings.SSH_SERVERS.split(",") if s.strip()]
         if not servers:
@@ -31,7 +31,7 @@ class SyncCommand(BaseCommand):
         return "" # Not used for local commands
 
     def execute_local(self, server: str, user_input: str, context: dict) -> str:
-        project_name = user_input.strip()
+        project_name = user_input.strip() or settings.DEFAULT_PROJECT_NAME
         servers = [s.strip() for s in settings.SSH_SERVERS.split(",") if s.strip()]
         
         if not servers:
