@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     
     SSH_HOST: str
     SSH_USER: str
+    SSH_SERVERS: str = ""  # Comma-separated list of servers
 
     TUNNEL_TOKEN: str
 

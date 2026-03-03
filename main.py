@@ -16,7 +16,7 @@ app = FastAPI(lifespan=lifespan)
 
 def background_job_runner(server: str, final_cmd: str, response_url: str):
     result_text = execute_remote_command(server, final_cmd)
-    payload = {"text": f"💻 Output:\n```{result_text}```"}
+    payload = {"text": f"💻 Output ({server}):\n```{result_text}```"}
     try:
         httpx.post(response_url, json=payload)
     except Exception as e:
@@ -57,7 +57,12 @@ async def dispatch_command(
 
     if handler.is_local:
         channel_id = form_data.get("channel_id")
-        result_text = handler.execute_local(server, command_args, {"channel_id": channel_id})
+        result_text = handler.execute_local(server, command_args, {
+            "channel_id": channel_id,
+            "background_tasks": background_tasks,
+            "response_url": response_url,
+            "job_runner": background_job_runner
+        })
         return {
             "response_type": "in_channel",
             "text": result_text

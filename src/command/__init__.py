@@ -6,6 +6,7 @@ from .show import ShowCommand
 from .bind_unbind import BindCommand, UnbindCommand
 from .list_bind import ListBindCommand
 from .scancel import SCancelCommand
+from .sync import SyncCommand
 
 settings = get_settings()
 
@@ -17,6 +18,7 @@ _commands = [
     UnbindCommand(),
     ListBindCommand(),
     SCancelCommand(),
+    SyncCommand(),
 ]
 
 COMMAND_REGISTRY: Dict[str, BaseCommand] = {cmd.name: cmd for cmd in _commands}

@@ -11,6 +11,7 @@ A powerful Slackbot for monitoring and managing Slurm jobs across multiple remot
   - Parses logs for experiment accuracy/metrics (via `/show`).
 - **Slack Commands**: A comprehensive suite of commands to interact with your Slurm clusters.
 - **Multi-Server Support**: Manage jobs across different computing clusters.
+- **Code Sync**: Synchronize project code across all servers with a single command (`/sync`).
 - **Notifications**: Get alerted in a specific channel when job status changes or new results are available.
 - **Easy Deployment**: Dockerized setup with Cloudflare Tunnel integration.
 
@@ -25,6 +26,7 @@ A powerful Slackbot for monitoring and managing Slurm jobs across multiple remot
 | `/unbind` | `/unbind <server> [job_id...]` | Stop monitoring specific jobs. If no ID provided, unbinds **all** monitored jobs for that server. |
 | `/lsbind` | `/lsbind` | Lists all jobs currently being monitored and their status. |
 | `/scancel` | `/scancel <server> <job_id>` | Cancels a running job. |
+| `/sync` | `/sync <project_name>` | Runs `git pull` in `~/scratch/<project_name>` on all configured `SSH_SERVERS`. |
 
 ## ⚙️ Configuration
 
@@ -44,6 +46,7 @@ SLACK_LOG_CHANNEL_ID=C0123456789  # Channel ID for notifications
 # SSH Configuration
 SSH_HOST=compute.example.com     # Domain suffix for servers
 SSH_USER=your_username
+SSH_SERVERS=server1,server2,server3 # Comma-separated list of servers for /sync
 
 # Cloudflare Tunnel
 TUNNEL_TOKEN=your-cloudflare-tunnel-token
