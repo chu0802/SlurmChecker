@@ -18,8 +18,6 @@ class Settings(BaseSettings):
     SLURM_CMD_FULL_SQUEUE: str
     SLURM_CMD_SSHARE: str
 
-    DEFAULT_PROJECT_NAME: str
-
     class Config:
         env_file = ".env"
 

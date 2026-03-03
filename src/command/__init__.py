@@ -8,6 +8,7 @@ from .list_bind import ListBindCommand
 from .scancel import SCancelCommand
 from .sync import SyncCommand
 from .run import RunCommand
+from .lsconfig import LsConfigCommand
 
 settings = get_settings()
 
@@ -21,6 +22,7 @@ _commands = [
     SCancelCommand(),
     SyncCommand(),
     RunCommand(),
+    LsConfigCommand(),
 ]
 
 COMMAND_REGISTRY: Dict[str, BaseCommand] = {cmd.name: cmd for cmd in _commands}

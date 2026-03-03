@@ -44,7 +44,7 @@ class RunCommand(BaseCommand):
         script_args = " ".join(valid_args)
         
         # Command construction
-        remote_cmd = f"cd ~/scratch/{project_name} && python -m script.script_builder {script_args}"
+        remote_cmd = f"cd ~/scratch/{project_name} && python -m script.build_script {script_args}"
 
         background_tasks = context.get("background_tasks")
         job_runner = context.get("job_runner")
